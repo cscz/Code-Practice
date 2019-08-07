@@ -26,10 +26,26 @@ public class GraphSearch {
         node3.neighbors.add(node4);
 	
 	GraphSearch a = new GraphSearch();
-	System.out.println("DFS results:");
-	a.dfs(node1);
 	System.out.println("BFS results:");
 	a.bfs(node1);
+	System.out.println("DFS results:");
+	a.dfs(node1);
+        Set<Node> seen = new HashSet<>();
+	System.out.println("DFS recursive results:");
+	a.dfsRecursive(node1, seen);
+    }
+    
+    public void dfsRecursive(Node start, Set<Node> seen) {
+        if(start == null) {
+            return;
+        }
+        System.out.println(start.val);
+        seen.add(start);
+        for(Node neighbor : start.neighbors) {
+            if(!seen.contains(neighbor)) {
+                dfsRecursive(neighbor, seen);
+            }
+        }
     }
     
     public void dfs(Node start) {
