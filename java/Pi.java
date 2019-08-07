@@ -1,3 +1,4 @@
+//Calculate Pi using Monte Carlo method.
 import java.lang.*;
 import java.util.*;
 
