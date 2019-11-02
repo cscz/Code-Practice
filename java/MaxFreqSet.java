@@ -37,8 +37,12 @@ public class MaxFreqSet {
 		if(cur != null) {
 			cur.freq++;
 			if(cur.left != start && cur.freq > cur.left.freq) {
-				//Exchange current Node with its left
-				exchange(cur.left, cur);
+				//Exchange current Node with its left most same frequency
+				Node iter = cur.left;
+				while(iter != start && iter.freq < cur.freq) {
+					iter = iter.left;
+				}
+				exchange(iter.right, cur);
 			}
 		} else {
 			cur = new Node();
@@ -63,8 +67,12 @@ public class MaxFreqSet {
 			} else {
 				cur.freq--;
 				if(cur.right != end && cur.freq < cur.right.freq) {
-					//exchange current Node with its right	
-					exchange(cur, cur.right);
+					//Exchange current Node with its right most same frequency 	
+					Node iter = cur.right;
+					while(iter != end && iter.freq > cur.freq) {
+						iter = iter.right;
+					}
+					exchange(cur, iter.left);
 				}
 			}
 		} 
@@ -78,11 +86,19 @@ public class MaxFreqSet {
 	}
 	
 	public static void exchange(Node a, Node b) {
-		a.left.right = b;
-		b.right.left = a;
-		a.right = b.right;
-		b.left = a.left;
-		a.left = b;
-		b.right = a;
+		if(a != b) {
+			Node al = a.left;
+			Node ar = a.right;
+			Node bl = b.left;
+			Node br = b.right;
+			a.left = bl;
+			a.right = br;
+			b.left = al;
+			b.right = ar;
+			al.right = b;
+			ar.left = b;
+			bl.right = a;
+			br.left = a;
+		}
 	}
 }
